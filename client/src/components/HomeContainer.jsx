@@ -1,17 +1,26 @@
 import React, { Component } from 'react';
-import { Container, Input } from 'semantic-ui-react';
+import { Container } from 'semantic-ui-react';
+import PrintingTable from './PrintingTable';
 
 class HomeContainer extends Component {
   state = {
+    printingData: null
+  }
 
+  componentDidMount() {
+    // amount paid for hawaii printing in 2014 in decending order
+    fetch('https://api.open.fec.gov/v1/schedules/schedule_b/?disbursement_description=printing&per_page=100&two_year_transaction_period=2014&recipient_state=HI&api_key=nepbcoj4JZr4ldiuDvw9Yy7ACgOVizWwehGDnzkX&sort=-disbursement_amount').then((res) => {
+      return res.json();
+    }).then((data) => {
+      this.setState({printingData: data.results});
+    });
   }
 
   render() {
     return (
       <div>
         <Container>
-          <Input placeholder='Search...' />
-          <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa strong. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede link mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi.</p>
+          <PrintingTable printingData={this.state.printingData} />
         </Container>
       </div>
     )
