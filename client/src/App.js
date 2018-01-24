@@ -12,7 +12,7 @@ class App extends Component {
           <h1 className="App-title">Campaign Collect</h1>
         </header> */}
         <p className="App-intro">
-          Lets get started
+          Printing Disbursements in Hawaii
         </p>
         <HomeContainer />
       </div>
